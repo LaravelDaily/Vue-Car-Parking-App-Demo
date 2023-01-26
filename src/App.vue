@@ -32,6 +32,9 @@ const auth = useAuth();
         </div>
         <div class="flex gap-4 items-center">
           <template v-if="auth.check">
+            <RouterLink class="router-link" :to="{ name: 'profile.edit' }">
+              Profile
+            </RouterLink>
             <button @click="auth.logout" class="router-link">Logout</button>
           </template>
           <template v-else>

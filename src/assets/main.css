@@ -26,4 +26,12 @@
     .router-link-active.router-link {
         @apply underline;
     }
+
+    .alert {
+        @apply border px-4 py-3 rounded relative;
+    }
+
+    .alert-success {
+        @apply text-green-700 bg-green-100 border-green-400
+    }
 }
