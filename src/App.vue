@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useAuth } from "@/stores/auth";
+
+const auth = useAuth();
 </script>
 
 <template>
@@ -15,14 +18,27 @@ import { RouterLink, RouterView } from "vue-router";
             </div>
             myParking
           </h2>
-          <RouterLink class="router-link" :to="{ name: 'home' }">
-            Home
-          </RouterLink>
+
+          <template v-if="auth.check">
+            <RouterLink class="router-link" :to="{ name: 'vehicles.index' }">
+              Vehicles
+            </RouterLink>
+          </template>
+          <template v-else>
+            <RouterLink class="router-link" :to="{ name: 'home' }">
+              Home
+            </RouterLink>
+          </template>
         </div>
         <div class="flex gap-4 items-center">
-          <RouterLink class="router-link" :to="{ name: 'register' }">
-            Register
-          </RouterLink>
+          <template v-if="auth.check">
+            <button @click="auth.logout" class="router-link">Logout</button>
+          </template>
+          <template v-else>
+            <RouterLink class="router-link" :to="{ name: 'register' }">
+              Register
+            </RouterLink>
+          </template>
         </div>
       </nav>
     </div>
