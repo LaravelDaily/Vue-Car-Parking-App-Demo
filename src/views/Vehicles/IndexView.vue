@@ -35,7 +35,12 @@ onMounted(store.getVehicles);
           </div>
         </div>
         <div class="flex gap-1">
-          <button type="button" class="btn btn-secondary text-sm">Edit</button>
+          <RouterLink
+            :to="{ name: 'vehicles.edit', params: { id: vehicle.id } }"
+            class="btn btn-secondary text-sm"
+          >
+            Edit
+          </RouterLink>
           <button
             type="button"
             class="btn text-white bg-red-600 hover:bg-red-500 text-sm"
