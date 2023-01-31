@@ -19,6 +19,10 @@
         @apply text-white bg-blue-600 hover:bg-blue-500;
     }
 
+    .btn-secondary {
+        @apply text-white bg-gray-600 hover:bg-gray-500;
+    }
+
     .router-link {
         @apply text-blue-600 hover:underline;
     }
@@ -33,5 +37,9 @@
 
     .alert-success {
         @apply text-green-700 bg-green-100 border-green-400
+    }
+
+    .plate {
+        @apply font-mono font-bold uppercase;
     }
 }
