@@ -23,6 +23,10 @@
         @apply text-white bg-gray-600 hover:bg-gray-500;
     }
 
+    .btn-danger {
+        @apply text-white bg-red-600 hover:bg-red-500;
+    }
+
     .router-link {
         @apply text-blue-600 hover:underline;
     }
