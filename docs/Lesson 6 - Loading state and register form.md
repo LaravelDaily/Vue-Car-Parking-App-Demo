@@ -1,18 +1,18 @@
 # Lesson 6 - Loading state and register form
 
-In this lesson, when user submits the form, we are going to indicate if form is beeing processed to give user some feedback to have more pleasant user experience.
+In this lesson, when a user submits the form, we are going to indicate if the form is being processed to give the user some feedback to have a more pleasant user experience.
 
 Before submit:
 
 ![Loading false](assets/loading-false.png)
 
-Right after form is submitted and client waits for response:
+Right after the form is submitted and the client waits for a response:
 
 ![Loading false](assets/loading-true.png)
 
 ## Spinner component
 
-By looking at the result we can immediately see that there is a new thing in the form, it is loading indicator on the button.
+By looking at the result we can immediately see that there is a new thing in the form, it is a loading indicator on the button.
 
 Create a new component `src/components/IconSpinner.vue` with the following content:
 
@@ -41,9 +41,9 @@ Create a new component `src/components/IconSpinner.vue` with the following conte
 </template>
 ```
 
-The component consists of html template containing SVG icon and some TailwindCSS classes. `animate-spin` class applies persistent rotation animation on the icon.
+The component consists of an HTML template containing an SVG icon and some TailwindCSS classes. `animate-spin` class applies persistent rotation animation on the icon.
 
-Then register component globally in `src/main.js` file like we did in the previous lesson.
+Then register the component globally in the `src/main.js` file as we did in the previous lesson.
 
 ```js
 import IconSpinner from "@/components/IconSpinner.vue";
@@ -86,7 +86,7 @@ In `src/stores/register.js` we need to import another function called `ref()`. T
 import { reactive, ref } from "vue";
 ```
 
-Define new store variable `loading`. It will have only 2 states, loading or not, so `boolean` perfectly suites our scenario.
+Define the new store variable `loading`. It will have only 2 states, loading or not, so `boolean` perfectly suits our scenario.
 
 ```js
 const loading = ref(false);
@@ -119,14 +119,14 @@ async function handleSubmit() {
 }
 ```
 
-Right in the beginning we added early return `if (loading.value) return;`. Method won't do anything if request is already beeing handled. This serves two purposes.
+Right in the beginning we added early return `if (loading.value) return;`. The method won't do anything if the request is already being handled. This serves two purposes.
 
-1. Prevents request beeing sent multiple times if form was submitted multiple times either by pressing enter or clicking button multiple times.
+1. Prevents request being sent multiple times if the form was submitted multiple times either by pressing enter or clicking the button multiple times.
 2. You might have this method called programmatically and you don't have a reason for this to be called multiple times.
 
-Then we set loading state to true `loading.value = true;` and when request is resolved in `finally()` block we set loading back to `false`.
+Then we set the loading state to true `loading.value = true;` and when the request is resolved in the `finally()` block we set loading back to `false`.
 
-Do not forget to expose loading state in return statement.
+Do not forget to expose the loading state in the return statement.
 
 ```js
 return { form, errors, loading, resetForm, handleSubmit };
@@ -182,15 +182,15 @@ export const useRegister = defineStore("register", () => {
 });
 ```
 
-## Disable form elements and display loading state
+## Disable form elements and display the loading state
 
-To disable form fields all we need to is to add `:disabled="store.loading"` attribute to `<input>` and `<button>` tags. Notice it has a colon `:` before an attribute name. This is a shortcut to `v-bind` directive to instruct Vue to keep attribute in sync with the component's properties.
+To disable form fields all we need to do is to add the `:disabled="store.loading"` attribute to `<input>` and `<button>` tags. Notice it has a colon `:` before an attribute name. This is a shortcut to the `v-bind` directive to instruct Vue to keep the attribute in sync with the component's properties.
 
 ```vue
 <... :disabled="store.loading" />
 ```
 
-And finally add icon component inside `<button>` tag. `v-show` directive renders the component only if the `loading` value evaluates to `true`.
+And finally, add an icon component inside the `<button>` tag. `v-show` directive renders the component only if the `loading` value evaluates to `true`.
 
 ```vue
 <IconSpinner v-show="store.loading" />
@@ -286,13 +286,13 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-## Question: I submit the register form but can't see loading state, what to do?
+## Question: I submit the registration form but can't see the loading state, what to do?
 
-This is normal especially if you work in local environment, there are several options to trigger loading state, the easiest ones are:
+This is normal especially if you work in the local environment, there are several options to trigger the loading state, the easiest ones are:
 
-1. You can just change `const loading = ref(false);` default value from `false` to `true` and refresh the page. Your form immediately will be in a loading state.
-2. To immitate network latency you can add `sleep(3)` in the beginning of your API `RegisterController` to delay the response for 3 seconds. Only if you're working locally and do not forget to remove it.
+1. You can just change the `const loading = ref(false);` default value from `false` to `true` and refresh the page. Your form immediately will be in a loading state.
+2. To imitate network latency you can add `sleep(3)` at the beginning of your API `RegisterController` to delay the response for 3 seconds. Only if you're working locally and do not forget to remove it.
 
-Congratulations, now you know how to implement most commonly used practices using forms.
+Congratulations, now you know how to implement the most commonly used practices using forms.
 
-As you noticed we still do have  `console.log(response.data);` after registration was succesful. Let's dive into authentication scaffolding.
+As you noticed we still do have  `console.log(response.data);` after registration was successful. Let's dive into authentication scaffolding.

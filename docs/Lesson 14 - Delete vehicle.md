@@ -1,6 +1,6 @@
 # Lesson 14 - Delete vehicle
 
-Final function left to implement for vehicles crud is delete button functionality in the index view and is very quick.
+The final function left to implement for vehicles crud is the delete button functionality in the index view which is very quick.
 
 1. Extend vehicle store `src/stores/vehicle.js`.
 
@@ -10,7 +10,7 @@ function deleteVehicle(vehicle) {
 }
 ```
 
-Then add it to return statement:
+Then add it to the return statement:
 
 ```js
 return {
@@ -21,7 +21,7 @@ return {
 };
 ```
 
-When delete method `deleteVehicle()` method is successful it will refetch vehicles list and index view will be rerendered.
+When the delete method `deleteVehicle()` method is successful it will re-fetch the vehicles list and the index view will be rerendered.
 
 Now our `src/stores/vehicle.js` store should look like this:
 
@@ -117,7 +117,7 @@ export const useVehicle = defineStore("vehicle", () => {
 });
 ```
 
-2. Update delete button in `src/views/Vehicles/IndexView.vue` component from:
+2. Update the delete button in the `src/views/Vehicles/IndexView.vue` component from:
 
 ```vue
 <button
@@ -200,4 +200,4 @@ onMounted(store.getVehicles);
 </template>
 ```
 
-Congratulations, you just have just finished implementing full functionality for user's vehicles. But let's not stop there, and move forward to next lesson and implement parkings.
+Congratulations, you just finished implementing full functionality for users' vehicles. But let's not stop there, move forward to the next lesson and implement parking.

@@ -1,23 +1,23 @@
 # Lesson 10 - Change password page
 
-Now it is time to implement change password feature for our logged in user. This lesson is no different than previous one in terms of complexity, actually a lot simpler since we won't be fetching anything from the server. Our change password form will look like this.
+Now it is time to implement the change password feature for our logged-in users. This lesson is no different than the previous one in terms of complexity, actually a lot simpler since we won't be fetching anything from the server. Our change password form will look like this.
 
 ![Change password page](assets/change-password.png)
 
-Before we go with implementation let's discuss few things first. Why can't we have change password fields on the same profile page? Well, some pages have that, but this also introduces new problems.
+Before we go with implementation let's discuss a few things first. Why can't we have password fields on the same profile page? Well, some pages have that, but this also introduces new problems.
 
-- The concept of leaving blank password fields to keep same password sometimes is too complicated for the user.
+- The concept of leaving blank password fields to keep the same password sometimes is too complicated for the user.
 - It can be understood that there is no password.
 - It can be even more confusing if you have them displayed with meaningless asterisks.
-- How do we display field labels? All three fields optional? If at least one of them are filled you need the other two filled.
-- If all fields required why do I need to change my password if only thing I wan't to change is name?
-- Validation on backend of submitted form becomes more complex, and now has two responsibilities at once. One for account details, another for changing the password.
+- How do we display field labels? Are all three fields optional? If at least one of them is filled you need the other two filled.
+- If all fields are required why do I need to change my password if the only thing I want to change is the name?
+- Validation on the backend of submitted forms becomes more complex, and now has two responsibilities at once. One for account details, and another for changing the password.
 
-There is no need to have password fields every time user wants to edit account details. Otherwise it is inevitable that at some point the user gets the validation error message unnecessarily.
+There is no need to have password fields every time user wants to edit account details. Otherwise, it is inevitable that at some point the user gets the validation error message unnecessarily.
 
-Having separate form to change password resolves all the issues above and makes both end-user's and developer's job a lot easier. That beeing said let's implement the form.
+Having a separate form to change passwords resolves all the issues above and makes both end-users and developers happy. That being said let's implement the form.
 
-1. Create change password store `src/stores/changePassword.js`.
+1. Create a change password store `src/stores/changePassword.js`.
 
 ```js
 import { reactive, ref } from "vue";
@@ -76,7 +76,7 @@ export const useChangePassword = defineStore("change-password", () => {
 });
 ```
 
-2. Create new `src/views/Profile/ChangePassword.vue` component.
+2. Create a new `src/views/Profile/ChangePassword.vue` component.
 
 ```vue
 <script setup>
@@ -144,7 +144,7 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-3. Register new route with newly created component in `src/router/index.js`.
+3. Register a new route with the newly created component in `src/router/index.js`.
 
 ```js
 {
@@ -231,7 +231,7 @@ export default router;
 </RouterLink>
 ```
 
-Our `src/App.vue` component should like that now.
+Our `src/App.vue` component should be like that now.
 
 ```vue
 <script setup>

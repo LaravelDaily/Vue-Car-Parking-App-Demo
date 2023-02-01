@@ -1,12 +1,12 @@
 # Lesson 8 - Login page
 
-To create login page is now very trivial task since we have all functionality set up for our application. It will be looking similar to register page.
+Creating a login page is now a very trivial task since we have all functionality set up for our application. It will be looking similar to the register page.
 
 ![Login page](assets/login.png)
 
 ## Login store
 
-Create a new store `src/stores/login.js` with following content:
+Create a new store `src/stores/login.js` with the following content:
 
 ```js
 import { reactive, ref } from "vue";
@@ -57,11 +57,11 @@ export const useLogin = defineStore("login", () => {
 });
 ```
 
-It is almost identical to `src/stores/register.js`, and structure was explained in previous lessons. Now it has a bit less fields, different `axios.post()` url and `form.remember` as `boolean` value for checkbox.
+It is almost identical to `src/stores/register.js`, and the structure was explained in previous lessons. Now it has a bit fewer fields, a different `axios.post()` URL, and `form.remember` as a `boolean` value for the checkbox.
 
 ## Login view
 
-Create `src/views/Auth/LoginView.vue` component.
+Create the `src/views/Auth/LoginView.vue` component.
 
 ```vue
 <script setup>
@@ -133,11 +133,11 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-We do not have to implement anything again related to validation, just changed `field` property value for `ValidationError` component to correspond our fields in login form returned from API.
+We do not have to implement anything again related to validation, just changed the `field` property value for the `ValidationError` component to correspond to our fields in the login form returned from API.
 
 ## Routes
 
-Register new route in `src/router/index.js`. Login page also will be accessible only by guest users same as `RegisterView` component.
+Register a new route in `src/router/index.js`. The login page also will be accessible only by guest users same as the `RegisterView` component.
 
 ```js
 {
@@ -148,9 +148,9 @@ Register new route in `src/router/index.js`. Login page also will be accessible 
 },
 ```
 
-Maybe it is a good idea now to redirect unauthenticated users to login page instead of register page.
+Maybe it is a good idea now to redirect unauthenticated users to the login page instead of the register page.
 
-Let's update `auth()` function.
+Let's update the `auth()` function.
 
 ```js
 function auth(to, from, next) {
@@ -162,7 +162,7 @@ function auth(to, from, next) {
 }
 ```
 
-`src/router/index.js` now should have following contents:
+`src/router/index.js` now should have the following contents:
 
 ```js
 import { createRouter, createWebHistory } from "vue-router";
@@ -285,7 +285,7 @@ const auth = useAuth();
 
 ## Update redirects
 
-It makes more sense to also update `destroyTokenAndRedirectTo()` function and its calls to redirect to login page by default instead of register.
+It makes more sense to also update the `destroyTokenAndRedirectTo()` function and its calls to redirect to the login page by default instead of the registration page.
 
 Update `src/stores/auth.js` store's `destroyTokenAndRedirectTo()` function to:
 
@@ -339,7 +339,7 @@ export const useAuth = defineStore("auth", () => {
 });
 ```
 
-And update call to `destroyTokenAndRedirectTo()` in `src/bootstrap.js` by removing parameter, it has a default value to go to login page now.
+And update the call to `destroyTokenAndRedirectTo()` in `src/bootstrap.js` by removing the parameter, it has a default value to go to the login page now.
 
 from:
 
@@ -383,4 +383,4 @@ if (localStorage.getItem("access_token")) {
 }
 ```
 
-From this point all unauthorized requests will lead user to login page.
+From this point, all unauthorized requests will lead the user to the login page.

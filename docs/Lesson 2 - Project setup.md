@@ -1,6 +1,6 @@
 # Lesson 2 - Project setup
 
-Now we have default app with basic counter implementation to see how state management and other things work in Vue. We don't need these things in scaffolding for our application and maybe it will be a good idea to use TailwindCSS for our styles to have a bit of convenience.
+Now we have a default app with basic counter implementation to see how state management and other things work in Vue. We don't need these things in scaffolding for our application and maybe it will be a good idea to use TailwindCSS for our styles to have a bit of convenience.
 
 1. Remove unnecessary files
 
@@ -23,7 +23,7 @@ deleted:    src/views/AboutView.vue
 
 2. Update existing files
 
-After removing files not needed we also need to update existing ones to get rid of any dead references and remove css from them.
+After removing files not needed we also need to update existing ones to get rid of any dead references and remove CSS from them.
 
 Update `src/App.vue` to:
 
@@ -72,7 +72,7 @@ Update `src/views/HomeView.vue` to:
 <template>Home view</template>
 ```
 
-3. After we got rid of all the junk, we can run linter to keep all existing files to consistent format. This step is not always necessary. Depending on your setup this command is run automatically by your IDE or editor on file each time you save it.
+3. After we got rid of all the junk, we can run a linter to keep all existing files in a consistent format. This step is not always necessary. Depending on your setup this command is run automatically by your IDE or editor on file each time you save it.
 
 ```shell
 npm run lint
@@ -106,9 +106,9 @@ module.exports = {
 };
 ```
 
-- added `/* eslint-env node */` to first line. This specifies that this file should run in node environment otherwise linter would complain that `module` is not defined.
+- added `/* eslint-env node */` to first line. This specifies that this file should run in Node environment otherwise linter would complain that `module` is not defined.
 - importing all colors, so any setting will work out of the box to play around
-- and added `"./src/**/*.{vue,js}"` value to content key so Tailwind will look all Vue and js files for classes to compile in src folder.
+- and added `"./src/**/*.{vue,js}"` value to the content key so Tailwind will look at all Vue and js files for classes to compile in the src folder.
 
 Create `postcss.config.js` in your project root directory with the following content:
 

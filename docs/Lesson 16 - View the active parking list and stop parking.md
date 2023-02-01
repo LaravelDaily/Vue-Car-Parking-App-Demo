@@ -1,6 +1,6 @@
-# Lesson 16 - View active parkings list and stop parking
+# Lesson 16 - View the active parking list and stop parking
 
-In this lesson we will display active parkings list with a stop button to end parking.
+In this lesson, we will display an active parking list with a stop button to end parking.
 
 ![Active parkings list](assets/active-list.png)
 
@@ -27,9 +27,9 @@ return {
 };
 ```
 
-`getActiveParkings()` will get currently active parkings. `stopParking()` will accept `parking` as parameter to know which active parking should be stopped when you press button. Then active parkings list will be rerenderent after refetching data. `parkings` variable is going to represent an array we will iterate in `ActiveParkings.vue` component.
+`getActiveParkings()` will get the currently active parking list. `stopParking()` will accept `parking` as a parameter to know which active parking should be stopped when you press the button. The active parking list will be rerendered after fetching data. `parkings` variable is going to represent an array we will iterate in the `ActiveParkings.vue` component.
 
-2. Update `src/views/Parkings/ActiveParkings.vue` component to:
+2. Update the `src/views/Parkings/ActiveParkings.vue` component to:
 
 ```vue
 <script setup>
@@ -120,14 +120,14 @@ onBeforeUnmount(() => clearInterval(interval));
 ]
 ```
 
-And we can format the data in the same fashion we did in previous lesson. `price_per_hour` and `total_price` is formatted using `toFixed()` method after division.
+And we can format the data in the same fashion we did in the previous lesson. `price_per_hour` and `total_price` is formatted using the `toFixed()` method after division.
 
 ```js
 {{ (parking.zone.price_per_hour / 100).toFixed(2) }}
 {{ (parking.total_price / 100).toFixed(2) }}
 ```
 
-To update data in "real time" when we have this page open, we can use `setInterval()` function to poll server let's say every 3 seconds.
+To update data in "real-time" when we have this page open, we can use the `setInterval()` function to poll the server let's say every 3 seconds.
 
 ```js
 store.getActiveParkings();
@@ -141,9 +141,9 @@ const interval = poll(store.getActiveParkings);
 onBeforeUnmount(() => clearInterval(interval));
 ```
 
-We define `poll()` function which accepts a function as a paremeter. We store interval returned by `poll()` so later when we leave this route and component is destroyed we can also destroy created interval using  `clearInterval()`. If we didn't do that sometimes you can get into the situation where application keeps polling server even if you don't need that.
+We define the `poll()` function which accepts a function as a parameter. We store interval returned by `poll()` so later when we leave this route and the component is destroyed we can also destroy created interval using  `clearInterval()`. If we didn't do that sometimes you can get into a situation where the application keeps polling the server even if you don't need that.
 
-3. Add css class `btn-danger` for stop button in `src/assets/main.css`
+3. Add CSS class `btn-danger` for the stop button in `src/assets/main.css`
 
 ```css
 .btn-danger {
@@ -151,12 +151,12 @@ We define `poll()` function which accepts a function as a paremeter. We store in
 }
 ```
 
-Now we can start/stop parkings and see how our price increases over time.
+Now we can start/stop parking and see how our price increases over time.
 
-4. There's one more tweak we can do in our application. Remember when user logins or registers it always gets redirected to `vehicles.index` page. As we now have `ActiveParkings` page it makes more sense to have the following logic:
+4. There's one more tweak we can do to our application. Remember when a user logins or registers it always gets redirected to the `vehicles.index` page. As we now have an `ActiveParkings` page it makes more sense to have the following logic:
 
-- Registered user - is redirected to `vehicles.index`, because to order a parking you must have a vehicle.
-- User who just logs in - is redirected to `parkings.active`. Probably it already has his vehicles setup, and just wants to use application for it's purpose.
+- Registered user - is redirected to `vehicles.index`, because to order parking you must have a vehicle.
+- The user who just logs in - is redirected to `parking.active`. Probably it already has his vehicles set up, and just wants to use the application for intended its purpose.
 
 5. Update `login()` function in `src/stores/auth.js` file:
 
@@ -181,11 +181,11 @@ function login(accessToken, origin = "login") {
 }
 ```
 
-Here we added second parameter `origin` to know where from we are calling this function, and according to that we redirect user either to `vehicles.index` or `parkings.active`.
+Here we added a second parameter `origin` to know where from we are calling this function, and according to that we redirect the user either to `vehicles.index` or `parkings.active`.
 
 6. So now we need to update `handleSubmit()` function in `src/stores/register.js` store.
 
-In place where we call `auth.login()` add second parameter which says `register`.
+In a place where we call `auth.login()` add a second parameter that says `register`.
 
 from:
 
@@ -225,4 +225,4 @@ function guest(to, from, next) {
 }
 ```
 
-Which means if logged in user tried to access for example `/register` url, it will be redirected to `parkings.active` route instead of `vehicles.index` route.
+This means if the logged-in user tried to access for example `/register` URL, it will be redirected to the `parkings.active` route instead of the `vehicles.index` route.

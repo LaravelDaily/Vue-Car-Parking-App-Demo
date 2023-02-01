@@ -4,7 +4,7 @@ Time to create a form to allow users to start parking by choosing one of the veh
 
 ![Order parking](assets/order-parking.png)
 
-1. Create new store `src/stores/zone.js`.
+1. Create a new store `src/stores/zone.js`.
 
 ```js
 import { ref } from "vue";
@@ -23,7 +23,7 @@ export const useZone = defineStore("zone", () => {
 });
 ```
 
-Here we have `getZones()` method to get information from API about parking zones. This data will be accessible via `zones` variable.
+Here we have the `getZones()` method to get information from API about parking zones. This data will be accessible via the `zones` variable.
 
 2. Create another store `src/stores/parking.js`.
 
@@ -71,9 +71,9 @@ export const useParking = defineStore("parking", () => {
 });
 ```
 
-This is pretty much much similar boiler plate for our stores. Another method to call API `startParkin()`. And two form fields `vehicle_id` and `zone_id` which will be submitted to the backend.
+This is pretty much much similar boilerplate for our stores. Another method to call API `startParkin()`. And two form fields `vehicle_id` and `zone_id` will be submitted to the backend.
 
-3. This is where it gets more interesting. Create new component `src/views/Parkings/OrderParking.vue`.
+3. This is where it gets more interesting. Create a new component `src/views/Parkings/OrderParking.vue`.
 
 ```vue
 <script setup>
@@ -185,11 +185,11 @@ const parkingStore = useParking();
 
 `vehicleStore` will be used to get all the vehicles user owns. Notice we didn't implement anything related to vehicles. The whole reason to separate everything using Composition API was to reuse that logic later in future components.
 
-`zoneStore` will provide us the data about parking zones.
+`zoneStore` will provide us with data about parking zones.
 
-`parkingStore` has implementation of our form logic to start parking.
+`parkingStore` has an implementation of our form logic to start parking.
 
-We also have new form field, select dropdown, to simplify it has the following structure:
+We also have a new form field, select dropdown, to simplify it has the following structure:
 
 ```vue
 <select
@@ -205,15 +205,15 @@ We also have new form field, select dropdown, to simplify it has the following s
 </select>
 ```
 
-It has the same `v-model` binding like `<input>` field. Value assigned to `parkingStore.form.vehicle_id` will be the one we select the `<option>` from `:value` attribute and it is `vehicle.id`.
+It has the same `v-model` binding as the `<input>` field. The value assigned to `parkingStore.form.vehicle_id` will be the one we select the `<option>` from `:value` attribute and it is `vehicle.id`.
 
-To display all options with vehicles available we iterate them using `v-for="vehicle in vehicleStore.vehicles"` like we did in vehicles index view. Along with `v-for` directive we need to define `:key` attribute which is required for Vue to internally keep track of nodes.
+To display all options with vehicles available we iterate them using `v-for="vehicle in vehicleStore.vehicles"` as we did in the vehicles index view. Along with the `v-for` directive we need to define the `:key` attribute which is required for Vue to internally keep track of nodes.
 
-When we load the form none of our options will be selected by default and default attribute `selected` doesn't work there.
+When we load the form none of our options will be selected by default and the default attribute `selected` doesn't work there.
 
 `v-model` will ignore the initial `selected` attributes found on any form elements. It will always treat the current bound JavaScript state as the source of truth. We should declare the initial value on the JavaScript side.
 
-This is done when our component loads, we call `getVehicles()` method from `vehicleStore`. When we get the response we assign the first vehicle id `response[0].id`  from the list to `parkingStore.form.vehicle_id`. This is the same value bound to our `<select>` element `v-model="parkingStore.form.vehicle_id"`.
+This is done when our component loads, we call the `getVehicles()` method from `vehicleStore`. When we get the response we assign the first vehicle id `response[0].id`  from the list to `parkingStore.form.vehicle_id`. This is the same value bound to our `<select>` element `v-model="parkingStore.form.vehicle_id"`.
 
 ```js
 vehicleStore.getVehicles().then((response) => {
@@ -223,20 +223,20 @@ vehicleStore.getVehicles().then((response) => {
 });
 ```
 
-Completely same logic applies to `zone_id`.
+The complete same logic applies to `zone_id`.
 
-On the bottom of the form we have additional `<ValidationError />` component with field named as `general`.
+On the bottom of the form we have an additional `<ValidationError />` component with a field named `general`.
 
 ```vue
 <ValidationError :errors="parkingStore.errors" field="zone_id" />
 <ValidationError :errors="parkingStore.errors" field="general" />
 ```
 
-`general` errors are displayed when API returns errors not related to fields. For example if you try to start parking while having one active on your vehicle.
+`general` errors are displayed when API returns errors not related to fields. For example, if you try to start parking while having one active on your vehicle.
 
 ![Can't start parking](assets/cant-start-parking.png)
 
-It is important to note that `<option>` element is pretty limited to styling, this is a reason we didn't apply any css classes.
+It is important to note that the `<option>` element is pretty limited to styling, this is a reason we didn't apply any CSS classes.
 
 ```vue
 <option
@@ -249,9 +249,9 @@ It is important to note that `<option>` element is pretty limited to styling, th
 </option>
 ```
 
-To display plate number in uppercase we can use JavaScript's string method `toUpperCase()`. For description if `vehicle.description` enumerates to true, we display that description.
+To display plate numbers in uppercase we can use JavaScript's string method `toUpperCase()`. For description, if `vehicle.description` enumerates to true, we display that description.
 
-In a similar fashion we format zone options.
+Similarly, we format zone options.
 
 ```vue
 <option
@@ -264,11 +264,11 @@ In a similar fashion we format zone options.
 </option>
 ```
 
-`zone.price_per_hour` is returned in cents from the API. By dividing it by 100 it would give us a result of `1`. To always display decimal points we need to use `toFixed()` function which is native JavaScript's method for integers ant floats. How much decimal points to display is specified by a parameter, in our case it is `toFixed(2)`. For euro currency sign in HTML there is `&euro;` code.
+`zone.price_per_hour` is returned in cents from the API. By dividing it by 100 it would give us a result of `1`. To always display decimal points we need to use the `toFixed()` function which is native JavaScript's method for integers and floats. How many decimal points to display is specified by a parameter, in our case, it is `toFixed(2)`. For the euro currency sign in HTML, there is a `&euro;` code.
 
-`<RouterLink />` by default is displayed as an anchor tag `<a href=...>`. But when our form is beeing processed we to change it to loading state, so user wouldn't end up with the situation when he submits the form, and later decides to cancel it while it is beeing processed and parking would still be started despite user canceled it on client. Anchor tag doesn't support `disabled` attribute.
+`<RouterLink />` by default is displayed as an anchor tag `<a href=...>`. But when our form is being processed we change it to a loading state, so the user wouldn't end up with the situation when he submits the form, and later decides to cancel it while it is being processed and parking would still be started despite the user canceled it on the client. The anchor tag doesn't support the `disabled` attribute.
 
-What can we do in this situation? We can add button as a child element of `<RouterLink />` component.
+What can we do in this situation? We can add a button as a child element of the `<RouterLink />` component.
 
 ```vue
 <RouterLink :to="{ name: 'parkings.active' }" v-slot="{ navigate }">
@@ -284,9 +284,9 @@ What can we do in this situation? We can add button as a child element of `<Rout
 
 But what action this button should invoke when we click it?
 
-We can expose `navigate` function from `<RouterLink />` component by adding `v-slot="{ navigate }"`, and bind that `navigate()` function on the button's `click` event.
+We can expose the `navigate` function from the `<RouterLink />` component by adding `v-slot="{ navigate }"`, and bind that `navigate()` function on the button's `click` event.
 
-4. Create new `src/views/Parkings/ActiveParkings.vue` component. It will be our parkings index view to display currently active parkings.
+4. Create a new `src/views/Parkings/ActiveParkings.vue` component. It will be our index view of parking to display currently active parking.
 
 ```vue
 <template>
@@ -307,7 +307,7 @@ We can expose `navigate` function from `<RouterLink />` component by adding `v-s
 </template>
 ```
 
-For now it will have only a button to order parking view and later we will implement active parkings list.
+For now, it will have only a button to order a parking view and later we will implement an active parking list.
 
 5. Now register our new components in a router `src/router/index.js`.
 
@@ -326,7 +326,7 @@ For now it will have only a button to order parking view and later we will imple
 },
 ```
 
-6. And add navigation for Parkings in top bar in `src/App.vue`.
+6. And add navigation for Parkings in the top bar in `src/App.vue`.
 
 ```vue
 <RouterLink class="router-link" :to="{ name: 'parkings.active' }">
@@ -404,4 +404,4 @@ const auth = useAuth();
 </template>
 ```
 
-And now we are able to select a vehicle, zone, and start parking.
+And now we can select a vehicle, and zone, and start parking.

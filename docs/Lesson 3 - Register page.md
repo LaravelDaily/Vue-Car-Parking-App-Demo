@@ -1,10 +1,10 @@
 # Lesson 3 - Register page
 
-In this lesson we are going to create Register page, make some app layout, and, add routes with links.
+In this lesson, we are going to create a Register page, make some app layouts, and, add routes with links.
 
 1. Register page template
 
-First create a new vue component `src/views/Auth/RegisterView.vue`
+First, create a new vue component `src/views/Auth/RegisterView.vue`
 
 ```vue
 <template>
@@ -71,15 +71,15 @@ First create a new vue component `src/views/Auth/RegisterView.vue`
 </template>
 ```
 
-This is ordinary form to display our registration form. There are few things I'd like to address. Form has `@submit.prevent` which means when we submit the form vue prevents it's default behavior, otherwise page just would reload, so we do not want that. Value of `@submit.prevent` is a callback, or a function which will be called when you submit the form, in this case it is just empty function and will be implemented in later lessons. `novalidate` attribute tells browser not to attempt any field validation by default, because we will implement validation to be done by the server every time the form is submitted.
+This is an ordinary form to display our registration form. There are a few things I'd like to address. The form has `@submit.prevent` which means when we submit the form vue prevents its default behavior, otherwise, the page would just reload, so we do not want that. The value of `@submit.prevent` is a callback or a function that will be called when you submit the form, in this case, it is just an empty function and will be implemented in later lessons. `novalidate` attribute tells the browser not to attempt any field validation by default, because we will implement validation to be done by the server every time the form is submitted.
 
 ```vue
 <form @submit.prevent="() => {}" novalidate>
 ```
 
-Another not so important but rather convenient thing for users are `autocomplete` attributes on form fields. It defines what type of values can be auto-filled by browser or for example password managers to generate a new password, if user uses any. More information can be found there [# HTML attribute: autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete).
+Another not-so-important but rather convenient thing for users is `autocomplete` attributes on form fields. It defines what type of values can be auto-filled by the browser or for example password managers to generate a new password if the user uses any. More information can be found there [# HTML attribute: autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete).
 
-We also added our own classes to style repetitive html tags such `input`, `label` and `button`. There is only one button now but definitely we will have more of them in the future. So let's define those classes and apply tailwind styles for them in `src/assets/main.css` file:
+We also added our classes to style repetitive HTML tags such as `input`, `label`, and `button`. There is only one button now, but we will have more of them in the future. So let's define those classes and apply tailwind styles for them in `src/assets/main.css` file:
 
 ```
 @tailwind base;
@@ -107,7 +107,7 @@ We also added our own classes to style repetitive html tags such `input`, `label
 
 2. Define `/register` route
 
-To be able to view that form, we need to register route and the view for a component. Define route with the following content in `src/router/index.js` file `routes` array:
+To be able to view that form, we need to register the route and the view for a component. Define the route with the following content in `src/router/index.js` file `routes` array:
 
 ```js
 {
@@ -117,15 +117,15 @@ To be able to view that form, we need to register route and the view for a compo
 },
 ```
 
-- path - the url your app visitor will see in the browser
-- name - is the name of your route also can be called as a reference, so if you later decide to change path, you don't need to update path in all your components.
-- component - accepts component or function which returns component. We chose to define anonymous function which returns imported `RegisterView` . This generates a separate chunk (small js file) for this route which is lazy-loaded when the route is visited.
+- path - the URL your app visitor will see in the browser
+- name - is the name of your route and also can be called a reference, so if you later decide to change path, you don't need to update the path in all your components.
+- component - accepts component or function which returns component. We chose to define an anonymous function that returns imported `RegisterView`. This generates a separate chunk (small js file) for this route which is lazy-loaded when the route is visited.
 
-Instead of using relative path `../views/Auth/RegisterView.vue` we wrote it like that `@/views/Auth/RegisterView.vue`. `@` symbol is an alias to src directory defined in `vite.config.js` file. This has advantage over relative paths because you don't need to update import statements if you decide to move file containing these references to another folder.
+Instead of using the relative path `../views/Auth/RegisterView.vue` we wrote it like that `@/views/Auth/RegisterView.vue`. The `@` symbol is an alias to the `src` directory defined in the `vite.config.js` file. This has an advantage over relative paths because you don't need to update import statements if you decide to move a file containing these references to another folder.
 
-3. Update parent template
+3. Update the parent template
 
-Now we can update `src/App.vue` file by adding navigation bar to navigate between `HomeView` and `RegisterView`:
+Now we can update the `src/App.vue` file by adding a navigation bar to switch between `HomeView` and `RegisterView`:
 
 ```vue
 <script setup>
@@ -164,7 +164,7 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 ```
 
-Instead of hardcoding urls like before `<RouterLink to="/">Home</RouterLink>` we use named routes like that:
+Instead of hardcoding URLs like before `<RouterLink to="/">Home</RouterLink>` we use named routes like that:
 
 ```vue
 <RouterLink class="router-link" :to="{ name: 'register' }">
@@ -172,7 +172,7 @@ Register
 </RouterLink>
 ```
 
-And finally let's add our `.router-link` css class into components section of `src/assets/main.css` file:
+And finally, let's add our `.router-link` CSS class into the components section of the `src/assets/main.css` file:
 
 ```
 .router-link {
@@ -184,6 +184,6 @@ And finally let's add our `.router-link` css class into components section of `s
 }
 ```
 
-Final result with working navigation should look like this:
+The final result with working navigation should look like this:
 
 ![Register page](assets/register.png)

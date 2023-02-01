@@ -1,8 +1,8 @@
 # Lesson 7 - Authentication
 
-We can continue implementing another essential thing for our client and it is authentication and routes handling. Our goals for this lesson are:
+We can continue implementing another essential thing for our client and it is authentication and route handling. Our goals for this lesson are:
 
-- Page that registered user will be redirected to
+- Page that the registered user will be redirected to
 - Save the token to localStorage
 - Allow user to log out
 - Protect routes that only authenticated or guest users can see
@@ -13,13 +13,13 @@ We can continue implementing another essential thing for our client and it is au
 
 ## View for only authorized users
 
-It is already known that in the future we will want to allow user edit vehicles, so let's create `src/views/Vehicles/IndexView.vue` component as a placeholder with following content:
+It is already known that in the future we will want to allow users edit vehicles, so let's create the `src/views/Vehicles/IndexView.vue` component as a placeholder with the following content:
 
 ```vue
 <template>You're logged in!</template>
 ```
 
-And register it in routes file `src/router/index.js` to just be able to display it in client:
+And register it in routes file `src/router/index.js` to just be able to display it in the client:
 
 ```js
 {
@@ -37,7 +37,7 @@ To work with `localStorage` in store we are going to need a package, install `@v
 npm install @vueuse/core --save
 ```
 
-Now we can go with authentication material, time to implement our `src/stores/auth.js` store for authentication methods and save token in the client.
+Now we can go with authentication material, time to implement our `src/stores/auth.js` store for authentication methods and save the token in the client.
 
 ```js
 import { computed } from "vue";
@@ -78,25 +78,25 @@ export const useAuth = defineStore("auth", () => {
 });
 ```
 
-For navigation `useRouter()` function is used. Then url `router.push('/my-url')` or route name `router.push({ name: 'my-route-name' })` can be used to navigate
+For navigation `useRouter()` function is used. The URL `router.push('/my-url')` or route name `router.push({ name: 'my-route-name' })` can be used to navigate
 
 ```js
 const router = useRouter();
 ```
 
-Using `useStorage()` we bind `access_token` value from localStorage, if value doesn't exist in localStorage it defaults to empty string.
+Using `useStorage()` we bind the `access_token` value from localStorage, if the value doesn't exist in localStorage it defaults to an empty string.
 
 ```js
 const accessToken = useStorage("access_token", "");
 ```
 
-Variable `check` will be used to determine if user is logged in or not, it will hold a boolean and is derived whether accessToken evaluates as true. Similar functionality is observed when you call `auth()->check()` in Laravel. For logic that includes reactive data, it is recommended to use a computed property using `computed()` function which accepts getter function.
+Variable `check` will be used to determine if the user is logged in or not, it will hold a boolean and is derived whether accessToken evaluates as true. Similar functionality is observed when you call `auth()->check()` in Laravel. For logic that includes reactive data, it is recommended to use a computed property using the `computed()` function which accepts the getter function.
 
 ```js
 const check = computed(() => !!accessToken.value);
 ```
 
-To update accessToken in localStorage we could just assign a new value as `accessToken.value = value`, but we also need to set Authorization header for axios to secured endpoints, that's the reason we wrap this functionality in a `setAccessToken()` method.
+To update accessToken in localStorage we could just assign a new value as `accessToken.value = value`, but we also need to set the Authorization header for axios to secured endpoints, that's the reason we wrap this functionality in a `setAccessToken()` method.
 
 ```js
 function setAccessToken(value) {
@@ -107,7 +107,7 @@ function setAccessToken(value) {
 }
 ```
 
-Method `login()` accepts token, updates both localStorage and axios headers with it, and then redirects to route name of our choice.
+Method `login()` accepts the token, updates both localStorage and axios headers with it, and then redirects to the route name of our choice.
 
 ```js
 function login(accessToken) {
@@ -117,7 +117,7 @@ function login(accessToken) {
 }
 ```
 
-Method `destroyTokenAndRedirectTo()` will be called when user logs out, or accessToken is invalid or expired.
+Method `destroyTokenAndRedirectTo()` will be called when the user logs out, or accessToken is invalid or expired.
 
 ```js
 function destroyTokenAndRedirectTo(routeName) {
@@ -126,7 +126,7 @@ function destroyTokenAndRedirectTo(routeName) {
 }
 ```
 
-Method `logout()` sends a request to server to delete current token on server side, and besides it fails or not, destroys token on client and redirects to `register` route.
+Method `logout()` sends a request to the server to delete the current token on the server side, and whether it fails or not, destroys the token on the client and redirects to the `register` route.
 
 ```js
 async function logout() {
@@ -136,7 +136,7 @@ async function logout() {
 }
 ```
 
-And finally exposing store variables to allow access them outside of store.
+And finally exposing store variables to allow access to them outside of the store.
 
 ```js
 return { login, logout, check, destroyTokenAndRedirectTo };
@@ -144,11 +144,11 @@ return { login, logout, check, destroyTokenAndRedirectTo };
 
 ## Update Axios to handle 401 Unauthorized responses
 
-Imagine a scenario when on one device you deauthorize other logins to your account. In that case to put it simply, server would delete access tokens and any clients that use them would always receive 401 Unauthorized from our API endpoints. Actually there could be many reasons for that. So we need a way to logout a client automatically if that happens.
+Imagine a scenario when on one device you deauthorize other logins to your account. In that case, to put it simply, the server would delete access tokens and any clients that use them would always receive 401 Unauthorized from our API endpoints. There could be many reasons for that. So we need a way to log out a client automatically if that happens.
 
-To handle such responses we need to add axios interceptor, similar concept in Laravel is called a middleware.
+To handle such responses we need to add an axios interceptor, a similar concept in Laravel is called middleware.
 
-Edit `src/bootstrap.js` and add new definition:
+Edit `src/bootstrap.js` and add a new definition:
 
 ```js
 import { useAuth } from "@/stores/auth";
@@ -166,9 +166,9 @@ window.axios.interceptors.response.use(
 );
 ```
 
-If response status of ANY request by calling API endpoints using axios is 401, we call `auth.destroyTokenAndRedirectTo("register")` so current authentication token on client is destroyed, and user is redirected to register page. We can't use `auth.logout()` for that, because we do not need to make any more requests to the server otherwise it would be infinite loop. We already know that access token is invalid.
+If the response status of ANY request by calling API endpoints using axios is 401, we call `auth.destroyTokenAndRedirectTo("register")` so the current authentication token on the client is destroyed, and the user is redirected to the registration page. We can't use `auth.logout()` for that, because we do not need to make any more requests to the server otherwise it would be an infinite loop. We already know that the access token is invalid.
 
-One more thing missing is that access token for axios is beeing set only when we call `setAccessToken()` from auth store. We also need to set that when we load application for the first time, for example if you hit refresh button browser. This can be done by appending following code:
+One more thing missing is that the access token for axios is being set only when we call `setAccessToken()` from auth store. We also need to set that when we load the application for the first time, for example, if you hit the refresh button browser. This can be done by appending the following code:
 
 ```js
 if (localStorage.getItem("access_token")) {
@@ -178,9 +178,9 @@ if (localStorage.getItem("access_token")) {
 }
 ```
 
-This sets authorization header for axios to whatever existing value is beeing held in localStorage.
+This sets the authorization header for axios to whatever existing value is being held in localStorage.
 
-Final version of `src/bootstrap.js`:
+The final version of `src/bootstrap.js`:
 
 ```js
 import axios from "axios";
@@ -212,7 +212,7 @@ if (localStorage.getItem("access_token")) {
 
 ## Update register store
 
-Now update `src/stores/register.js` by importing `useAuth()` function from auth store.
+Now update `src/stores/register.js` by importing the `useAuth()` function from auth store.
 
 ```js
 import { useAuth } from "@/stores/auth";
@@ -224,7 +224,7 @@ Define auth variable to consume auth store.
 const auth = useAuth();
 ```
 
-And replace `console.log(response.data)` in `handleSubmit()` method with `auth.login(response.data.access_token)`, that's it, no more changes needed in register page.
+And replace `console.log(response.data)` in the `handleSubmit()` method with `auth.login(response.data.access_token)`, that's it, no more changes are needed on the register page.
 
 ```js
 return window.axios
@@ -290,11 +290,11 @@ export const useRegister = defineStore("register", () => {
 });
 ```
 
-When user registers token will be saved on client, and user redirected to `vehicles.index` route.
+When the user registers token will be saved on the client, and the user redirected to the `vehicles.index` route.
 
 ## Navigation links
 
-Update `src/App.vue` component with the following code:
+Update the `src/App.vue` component with the following code:
 
 ```vue
 <script setup>
@@ -357,9 +357,9 @@ import { useAuth } from "@/stores/auth";
 const auth = useAuth();
 ```
 
-Navigation parts are shown/hidden using `v-if` directive and `auth.check` variable we defined earlier in auth store. So one template will be shown if user is authenticated, and after `v-else` will shown to guest users.
+Navigation parts are shown/hidden using the `v-if` directive and `auth.check` variable we defined earlier in auth store. So one template will be shown if the user is authenticated, and after `v-else` will be shown to guest users.
 
-When user clicks logout button `auth.logout()` will be called from auth store.
+When a user clicks the logout button `auth.logout()` will be called from auth store.
 
 Multiple `<template>` tags can also be used in a template, they're just not rendered in DOM, so works perfectly to wrap children with some logic without having actual parent elements. It looks excessive now, but later we will have more links.
 
@@ -376,11 +376,11 @@ Multiple `<template>` tags can also be used in a template, they're just not rend
 
 ## Protected routes
 
-So far so good, but what if unauthenticated user tries to navigate to `/vehicles`? And already authenticated user navigates to `/register`? In both cases page will be displayed. This can be not intentional, maybe user just tried to navigate to page from history.
+So far so good, but what if the unauthenticated user tries to navigate to `/vehicles`? And already authenticated user navigates to `/register`? In both cases, the page will be displayed. This can be not intentional, maybe the user just tried to navigate to a page from history.
 
 Let's add some "gates" to those pages. Define two functions in `src/router/index.js`:
 
-One to allow only authenticated users access url. So if user is not authenticated it will be redirected to `register` route:
+One is to allow only authenticated users to access URLs. So if a user is not authenticated it will be redirected to the `register` route:
 
 ```js
 function auth(to, from, next) {
@@ -392,7 +392,7 @@ function auth(to, from, next) {
 }
 ```
 
-And the other one where only guests should be allowed to see, otherwise if user is authenticated his "home" now is `vehicles.index` named route where he will be redirected instead:
+And the other one where only guests should be allowed to see, otherwise if a user is authenticated his "home" now is `vehicles.index` named route where he will be redirected instead:
 
 ```js
 function guest(to, from, next) {
@@ -404,7 +404,7 @@ function guest(to, from, next) {
 }
 ```
 
-Now update route definitions, on register route add `beforeEnter: guest` option:
+Now update route definitions, on the registration route, add the `beforeEnter: guest` option:
 
 ```js
 {
@@ -415,7 +415,7 @@ Now update route definitions, on register route add `beforeEnter: guest` option:
 },
 ```
 
-And for vehicles.index route add `beforeEnter: auth` option:
+And for vehicles.index route add the `beforeEnter: auth` option:
 
 ```js
 {
@@ -426,7 +426,7 @@ And for vehicles.index route add `beforeEnter: auth` option:
 },
 ```
 
-So `register` will be available only for guests, and `vechiles.index` for authorized users.
+So `register` will be available only for guests, and `vehicles.index` for authorized users.
 
 Routes file `src/router/index.js` should look like that:
 
@@ -475,4 +475,4 @@ const router = createRouter({
 export default router;
 ```
 
-Now we have implemented all authentication scaffolding by ourselves. Time to add login page in the next lesson.
+Now we have implemented all authentication scaffolding by ourselves. Time to add a login page in the next lesson.

@@ -1,14 +1,14 @@
 # Lesson 4 - Register implementation
 
-In this lesson we will learn how work with Pinia to manage state and values used for form, how to send a request to server using Axios library when user submits the form and read the response from the server.
+In this lesson, we will learn how to work with Pinia to manage the state and values used for the form, and how to send a request to the server using the Axios library when a user submits the form and reads the response from the server.
 
-First we need to install Axios library for requests to API:
+First, we need to install the Axios library for requests to API:
 
 ```shell
 npm install axios --save
 ```
 
-Then create a new file `src/bootstrap.js` with following content:
+Then create a new file `src/bootstrap.js` with the following content:
 
 ```js
 import axios from "axios";
@@ -20,13 +20,13 @@ window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = "http://parkingapi.test/api/v1";
 ```
 
-We set `X-Requested-With` header to tell server it is XHR request, and it serves additional purpose so the server must consent to CORS policies.
+We set `X-Requested-With` header to tell the server it is an XHR request, and it serves an additional purpose so the server must consent to CORS policies.
 
-Option `window.axios.defaults.withCredentials = true;` tells axios library to send the cookies along the request.
+Option `window.axios.defaults.withCredentials = true;` tells the axios library to send the cookies along the request.
 
-Convenience option is `window.axios.defaults.baseURL = "http://parkingapi.test/api/v1";` so we can omit full urls in our requests and just type in relative path of the server's API endpoint.
+The convenience option is `window.axios.defaults.baseURL = "http://parkingapi.test/api/v1";` so we can omit full URLs in our requests and just type in the relative path of the server's API endpoint.
 
-After that we need import `src/bootstrap.js` file into `src/main.js` , this can be seen on the first line:
+After that we need to import `src/bootstrap.js` file into `src/main.js`, this can be seen in the first line:
 
 ```js
 import "@/bootstrap.js";
@@ -47,7 +47,7 @@ app.use(router);
 app.mount("#app");
 ```
 
-Now we have setup for making requests to API. Now it is time to implement our store. Create a new `src/stores/register.js` file as follows:
+Now we have a setup for making requests to API. Now it is time to implement our store. Create a new `src/stores/register.js` file as follows:
 
 ```js
 import { reactive } from "vue";
@@ -78,13 +78,13 @@ export const useRegister = defineStore("register", () => {
 });
 ```
 
-We define reactive object `form` with the `reactive()` function. Object contains keys we are going to use on register page, these values will update automatically when value of the input field changes.
+We define the reactive object `form` with the `reactive()` function. An object contains keys we are going to use on the register page, these values will update automatically when the value of the input field changes.
 
-> Reactive objects are JavaScript Proxies and behave just like normal objects. The difference is that Vue is able to track the property access and mutations of a reactive object. Read more on [reactivity fundamentals](https://vuejs.org/guide/essentials/reactivity-fundamentals.html#declaring-reactive-state). If you're curious about the details or not familiar with reactivity it is explained in official Vue guide [reactivity in depth](https://vuejs.org/guide/extras/reactivity-in-depth.html).
+> Reactive objects are JavaScript Proxies and behave just like normal objects. The difference is that Vue can track the property access and mutations of a reactive object. Read more on [reactivity fundamentals](https://vuejs.org/guide/essentials/reactivity-fundamentals.html#declaring-reactive-state). If you're curious about the details or not familiar with reactivity it is explained in the official Vue guide [reactivity in depth](https://vuejs.org/guide/extras/reactivity-in-depth.html).
 
-Method `resetForm()` will be used to clear all form fields when `RegisterView` component is unmounted, because state is persistent across the application.
+Method `resetForm()` will be used to clear all form fields when the `RegisterView` component is unmounted, because the state is persistent across the application.
 
-Method `handleSubmit()` makes a request to the server, and prints response to console, in future lessons we will change that to save the returned token from the response and redirect user to logged in area. As we can see for axios `post` method we define relative url, because `baseURL` option was added earlier.
+Method `handleSubmit()` requests the server, and prints the response to the console, in future lessons we will change that to save the returned token from the response and redirect the user to the login area. As we can see for the axios `post` method we define relative URL, because the `baseURL` option was added earlier.
 
 Time to update our `src/views/Auth/RegisterView.vue`:
 
@@ -166,7 +166,7 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-Whole new section was added to the our register component:
+The whole new section was added to our register component:
 
 ```vue
 <script setup>
@@ -179,28 +179,28 @@ onBeforeUnmount(store.resetForm);
 </script>
 ```
 
-To make our store available first we import `useRegister` function from store we defined and then assignint it to a constant `const store = useRegister();`
+To make our store available first we import the `useRegister` function from the store we defined and then assigning it to a constant `const store = useRegister();`
 
-`onBeforeUnmount` - registers a hook to be called right before a component instance is to be unmounted accepts another function as a parameter. Notice `store.resetForm` is passed which is a function reference as opposed to `store.resetForm()` which would be immediate function call.
+`onBeforeUnmount` - registers a hook to be called right before a component instance is to be unmounted and accepts another function as a parameter. Notice `store.resetForm` is passed which is a function reference as opposed to `store.resetForm()` which would be an immediate function call.
 
-Values from the store to input fields are bound using `v-model` directive, for example: `<input v-model="store.form.email" />`. All form input fields now have `v-model` directive with corresponding values.
+Values from the store to input fields are bound using the `v-model` directive, for example: `<input v-model="store.form.email" />`. All form input fields now have a `v-model` directive with corresponding values.
 
-Empty function on form submit gets replaced with `store.handleSubmit`: `<form @submit.prevent="store.handleSubmit" novalidate>`. It is called when form gets submitted.
+Empty function on form submit gets replaced with `store.handleSubmit`: `<form @submit.prevent="store.handleSubmit" novalidate>`. It is called when the form gets submitted.
 
-After submitting the form the following output can be seen in console:
+After submitting the form the following output can be seen in the console:
 
 ```js
 Object { access_token: "118|CJv0t9yHJcPFsifkXyoMaiCJBpRyrmsXYDLENyAN" }
 ```
 
-This means everything went right and user was registered, later we will cover that but one thing at a time. Yet we still have another thing missing. What if we press button again? Oh no, we got an error in the console:
+This means everything went right and the user was registered, later we will cover that but one thing at a time. Yet we still have another thing missing. What if we press the button again? Oh no, we got an error in the console:
 
 ![Register fail](assets/register-fail.png)
 
-Let's inpect the network tab on browser's dev tolls:
+Let's inspect the network tab on the browser's dev tools:
 
 ![network-422](assets/network-422.png)
 
-Server denied our request with 422 Unprocessable Entity response code, this means that we have some sort of data validation error. We tried to register another user with same credentials and user doesn't even know why this happened in the first place.
+The server denied our request with 422 Unprocessable Entity response code, this means that we have some sort of data validation error. We tried to register another user with the same credentials and the user doesn't even know why this happened in the first place.
 
 Let's move to another lesson and handle form validation.

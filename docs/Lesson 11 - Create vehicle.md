@@ -1,14 +1,14 @@
-# Lesson 11 - Create vehicle
+# Lesson 11 - Create a vehicle
 
-Firstly for user to be able to order parking in particular zone it must be able to add his owned vehicles. In this lesson we will start to implement our first CRUD. When user is registered or logged in he will be redirected to `vehicles.index` page. Yet we have only a placeholder for vehicles list, because we do not have any vehicles stored and need to create some first.
+Firstly for a user to be able to order parking in a particular zone they must be able to add their owned vehicles. In this lesson, we will start to implement our first CRUD. When a user is registered or logged in he will be redirected to the `vehicles.index` page. Yet we have only a placeholder for the vehicles list because we do not have any vehicles stored and need to create some first.
 
 ![Add vehicle](assets/my-vehicles.png)
 
-And the form to add vehicle will look like this. After pressing `Save vehicle` form is submitted to the server and then redirected back to list. By pressing `Cancel` redirect will be immediate disregarding the form.
+And the form to add a vehicle will look like this. After pressing the `Save vehicle` form is submitted to the server and then redirected back to the list. Pressing the `Cancel` redirect will immediately disregard the form without submitting it.
 
 ![Add vehicle](assets/add-vehicle.png)
 
-1. Create new `src/stores/vehicle.js` store with the following content.
+1. Create a new `src/stores/vehicle.js` store with the following content.
 
 ```js
 import { reactive, ref } from "vue";
@@ -54,7 +54,7 @@ export const useVehicle = defineStore("vehicle", () => {
 });
 ```
 
-Store contents are very similar like the other ones, except we have imported `useRouter()` function to be able to navigate to index page after successfuly saving the form.
+Store contents are very similar to the other ones, except we have imported the `useRouter()` function to be able to navigate to the index page after successfully saving the form.
 
 ```js
 import { useRouter } from "vue-router";
@@ -76,7 +76,7 @@ function storeVehicle() {
   //...
 ```
 
-2. Create new `src/views/Vehicles/CreateView.vue` component.
+2. Create a new `src/views/Vehicles/CreateView.vue` component.
 
 ```vue
 <script setup>
@@ -138,9 +138,9 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-To display license plate in monospaced bold uppercase font, we added separate css class named `plate`. It will be used throughout demo app.
+To display the license plate in monospaced bold uppercase font, we added a separate CSS class named `plate`. It will be used throughout the demo app.
 
-For the cancel button we wrap both buttons with `<div class="flex gap-2">` to let flexbox do all the positioning and spacing for us. Cancel button itself is `<RouterLink />` component from Vue Router. We already used that component for top bar navigation except it has `btn btn-secondary` classes. And for submit button added `w-full` class to be as wide as much space we have.
+For the cancel button, we wrap both buttons with `<div class="flex gap-2">` to let flexbox do all the positioning and spacing for us. The cancel button itself is a `<RouterLink />` component from Vue Router. We already used that component for top bar navigation except it has `btn btn-secondary` classes. And for the button, the `w-full` class was added to be as wide as much space we have.
 
 ```vue
 <div class="flex gap-2">
@@ -158,7 +158,7 @@ For the cancel button we wrap both buttons with `<div class="flex gap-2">` to le
 </div>
 ```
 
-3. Now let's define those `plate` and `btn-secondary` classes in `src/assets/main.css` file.
+3. Now let's define those `plate` and `btn-secondary` classes in the `src/assets/main.css` file.
 
 ```
 .btn-secondary {
@@ -220,7 +220,7 @@ Full contents of `src/assets/main.css` now should look like this.
 }
 ```
 
-4. Register `CreateView.vue` component in routes file `src/router/index.js`.
+4. Register the `CreateView.vue` component in the routes file `src/router/index.js`.
 
 ```js
 {
@@ -302,7 +302,7 @@ const router = createRouter({
 export default router;
 ```
 
-5. Now we can update `src/views/Vehicles/IndexView.vue` component to display button to create form.
+5. Now we can update the `src/views/Vehicles/IndexView.vue` component to display the button to the create form.
 
 ```vue
 <template>
@@ -323,8 +323,8 @@ export default router;
 </template>
 ```
 
-When you save the vehicle you will be redirected to index page and no list is displayed yet. On the database `vehicles` table you should see a new record.
+When you save the vehicle you will be redirected to the index page and no list is displayed yet. On the database `vehicles` table you should see a new record.
 
 ![Saved vehicle](assets/saved-vehicle.png)
 
-Let's move forward to the next lesson, and display vehicles list on the client.
+Let's move forward to the next lesson, and display the vehicles list on the client.

@@ -1,8 +1,8 @@
 # Lesson 17 - Parking history page
 
-Now when we stop the parking it just disappears from the active parkings list. This was actually planned to separate parking orders into `active` and `history` categories so they don't get in the way of each other and are more convenient.
+Now when we stop parking it just disappears from the active parking list. This was planned to separate parking orders into `active` and `history` categories so they don't get in the way of each other and are more convenient.
 
-Let's implement parking history list in this lesson.
+Let's implement the parking history list in this lesson.
 
 ![Parking history](assets/parking-history.png)
 
@@ -24,7 +24,7 @@ return {
 };
 ```
 
-It is very similar what we did before by implementing active parkings list. We have another `stoppedParkings` array to store data and `getStoppedParkins()` method to retrieve data from different endpoint.
+It is very similar to what we did before by implementing an active parking list. We have another `stoppedParkings` array to store data and a `getStoppedParkins()` method to retrieve data from different URL.
 
 `src/stores/parking.js` now should have the following content:
 
@@ -101,7 +101,7 @@ export const useParking = defineStore("parking", () => {
 });
 ```
 
-2. Create new `src/views/Parkings/ParkingHistory.vue` component.
+2. Create a new `src/views/Parkings/ParkingHistory.vue` component.
 
 ```vue
 <script setup>
@@ -150,9 +150,9 @@ store.getStoppedParkings();
 </template>
 ```
 
-This component doesn't have anything new we didn't cover in previous lesson, and we have put `view details` button as placeholder for next lesson, to view more detailed information about parking order.
+This component doesn't have anything new we didn't cover in the previous lesson, and we have put the `view details` button as a placeholder for the next lesson, to view more detailed information about parking orders.
 
-3. Register route for newly created component in `src/router/index.js` file.
+3. Register the route for a newly created component in the `src/router/index.js` file.
 
 ```js
 {
@@ -258,7 +258,7 @@ const router = createRouter({
 export default router;
 ```
 
-4. Add button to navigation in `src/App.vue`.
+4. Add a button to navigation in `src/App.vue`.
 
 ```vue
 <RouterLink class="router-link" :to="{ name: 'parkings.history' }">

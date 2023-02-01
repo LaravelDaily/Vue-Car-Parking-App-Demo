@@ -1,12 +1,12 @@
 # Lesson 5 - Validation and register form
 
-Our objective in this lesson is to display form errors on client side.
+Our objective in this lesson is to display form errors on the client side.
 
 ![Validation errors](assets/validation.png)
 
 ## Extending register store
 
-When submitting forms it is crucial to indicate if server doesn't accept the request and some information provided needs to be clarified. On such cases Laravel returns a response with more details. In our case if we submit an empty form Laravel returns a response with 422 status code with an object which looks like this:
+When submitting forms it is crucial to indicate if the server doesn't accept the request and if some information provided needs to be clarified. In such cases, Laravel returns a response with more details. In our case, if we submit an empty form Laravel returns a response with a 422 status code with an object which looks like this:
 
 ```json
 {
@@ -25,15 +25,15 @@ When submitting forms it is crucial to indicate if server doesn't accept the req
 }
 ```
 
-Considering that we are going to have more forms in the future it is a good idea to have a component where we can pass errors object and a field name to display particular error message under specific field.
+Considering that we are going to have more forms in the future it is a good idea to have a component where we can pass errors object and a field name to display particular error messages under the specific field.
 
-Now let's extend our register store `src/stores/register.js` by adding a new reactive object called `errors`, this is where we are going to store errors object returned from backend.
+Now let's extend our register store `src/stores/register.js` by adding a new reactive object called `errors`, this is where we are going to store the errors object returned from the backend.
 
 ```js
 const errors = reactive({});
 ```
 
-Then extend `handleSubmit` method by adding `catch` clause, and if it is validation error assign response with errors to our defined reactive `errors` object.
+Then extend the `handleSubmit` method by adding a `catch` clause, and if it is a validation error assign a response with errors to our defined reactive `errors` object.
 
 ```js
 async function handleSubmit() {
@@ -70,7 +70,7 @@ errors = error.response.data.errors;
 errors.value = error.response.data.errors;
 ```
 
-On every new submit we want to clear `errors` object value key, this is done with `errors.value = {};` line.
+On every new submission, we want to clear the `errors` object value key, this is done with `errors.value = {};` line.
 
 We also added `finally()` code block:
 
@@ -82,9 +82,9 @@ We also added `finally()` code block:
     });
 ```
 
-Usually when you submit the form browser would automatically clear fields with `type="password"`, but because we are preventing default behavior this won't happen by default and we need to do that manually to retain same functionality. Code in `finally()` clause will be always executed disregarding if request resulted in success or error.
+Usually when you submit the form browser would automatically clear fields with `type="password"`, but because we are preventing default behavior this won't happen by default and we need to do that manually to retain the same functionality. Code in the `finally()` clause will be always executed disregarding if the request resulted in success or error.
 
-`resetForm()` method also is extended by clearing validation errors along the fields.
+The `resetForm()` method also is extended by clearing validation errors along the fields.
 
 ```js
 function resetForm() {
@@ -97,7 +97,7 @@ function resetForm() {
 }
 ```
 
-Last thing is to add `errors` object to return statement, so we can use that in our components.
+The last thing is to add an `errors` object to the return statement, so we can use that in our components.
 
 ```js
 return { form, errors, resetForm, handleSubmit };
@@ -150,7 +150,7 @@ export const useRegister = defineStore("register", () => {
 });
 ```
 
-When validation error happens now our errors object will contain data in such format:
+When a validation error happens now our errors object will contain data in such format:
 
 ```json
 {
@@ -172,7 +172,7 @@ When validation error happens now our errors object will contain data in such fo
 
 ## Validation component
 
-Store has been set up and it is clear how error data is stored. Now it is a lot easier to implement the component to display error messages in form.
+The store has been set up and it is clear how error data is stored. Now it is a lot easier to implement the component to display error messages in form.
 
 Create a new `src/components/ValidationError.vue` component:
 
@@ -194,11 +194,11 @@ const props = defineProps(["errors", "field"]);
 </template>
 ```
 
-For component to accept properties we need to import `defineProps` method from `vue`. Here we define two properties `errors` and `field`. `errors` will be our errors object passed from the store, and `field` will contain field key to display specific error message.
+For the component to accept properties we need to import the `defineProps` method from `vue`. Here we define two properties `errors` and `field`. `errors` will be our errors object passed from the store, and `field` will contain the field key to display a specific error message.
 
-Now we need to import `ValidationError` component into our `RegisterView` to be able to comsume it, but is a bit of inconvenient, because `ValidationError` will be heavily reused in whole application, so it is better to register it globally.
+Now we need to import the `ValidationError` component into our `RegisterView` to be able to consume it, but is a bit inconvenient, because `ValidationError` will be heavily reused in the whole application, so it is better to register it globally.
 
-This can be done by importing it in `src/main.js`, along where Vue is initialised.
+This can be done by importing it in `src/main.js`, along with where Vue is initialized.
 
 ```js
 import ValidationError from "@/components/ValidationError.vue";
@@ -241,9 +241,9 @@ To display error messages is pretty straightforward now, we need to add only 3 l
 <ValidationError :errors="store.errors" field="password" />
 ```
 
-> `password_confirmation` field never returns error messages, so we do not need to add it there. Password related errors are always returned under `password` key.
+> `password_confirmation` field never returns error messages, so we do not need to add it there. Password-related errors are always returned under the `password` key.
 
-Final result of `src/views/Auth/RegisterView.vue`:
+The final result of `src/views/Auth/RegisterView.vue`:
 
 ```vue
 <script setup>

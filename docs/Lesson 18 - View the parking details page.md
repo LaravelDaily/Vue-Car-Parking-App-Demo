@@ -1,8 +1,8 @@
-# Lesson 18 - View parking details page
+# Lesson 18 - View the parking details page
 
-On parking history page we intentionally didn't include all the information about parkings that were stopped and added view details button.
+On the parking history page, we intentionally didn't include all the information about past parking that was stopped and added the view details button.
 
-In this lesson we will create parking details page to summarize all the information about past order.
+In this lesson, we will create a parking details page to summarize all the information about past orders.
 
 ![Parking details](assets/parking-details.png)
 
@@ -31,9 +31,9 @@ return {
 
 `parkingDetails` will hold information about specific parking that API returns to us.
 
-`getParking()` fetches data from API and assigns it to `parkingDetails`. Note that we chose different name for this variable instead of just simply naming it `parking`, because `parking` is also a parameter of a function.
+`getParking()` fetches data from API and assigns it to `parkingDetails`. Note that we chose a different name for this variable instead of just simply naming it `parking` because `parking` is also a parameter of a function.
 
-Parking object returned has the following format:
+The parking object returned has the following format:
 
 ```json
 {
@@ -52,7 +52,7 @@ Parking object returned has the following format:
 }
 ```
 
-We can return `parkingDetails` as `parking` in return statement by assigning `parkingDetails` to a different key `parking`.
+We can return `parkingDetails` as `parking` in the return statement by assigning `parkingDetails` to a different key `parking`.
 
 ```js
 return {
@@ -63,7 +63,7 @@ return {
 }
 ```
 
-But how does this work? Well, when we are returning values within object, actually we are using object literal property value shorthand, previous example is completely identical to the following one:
+But how does this work? Well, when we are returning values within the object, actually we are using object literal property value shorthand, previous example is completely identical to the following one:
 
 ```js
 return {
@@ -76,7 +76,7 @@ return {
 
 The property value shorthand syntax automatically converts each variable to a `key: value` pair with the variable name as a property key and the variable value as a property value.
 
-2. Create new `src/views/Parkings/ParkingDetails.vue` component.
+2. Create a new `src/views/Parkings/ParkingDetails.vue` component.
 
 ```vue
 <script setup>
@@ -145,7 +145,7 @@ onBeforeUnmount(store.resetParkingDetails);
 </template>
 ```
 
-Here we do not show card completely unless `store.parking.id` exists. If it doesn't it means data isn't fetched yet since the whole `store.parking` object is empty.
+Here we hide the card completely unless `store.parking.id` exists. If it doesn't it means data isn't fetched yet since the whole `store.parking` object is empty.
 
 ```vue
 <div
@@ -154,7 +154,7 @@ Here we do not show card completely unless `store.parking.id` exists. If it does
 >
 ```
 
-3. Register route for compontnt in `src/router/index.js`.
+3. Register route for component in `src/router/index.js`.
 
 ```js
 {
@@ -165,9 +165,9 @@ Here we do not show card completely unless `store.parking.id` exists. If it does
 },
 ```
 
-We use route parameter `:id` in the same fashion as described it in previous lesson where when creating `Vehicles/EditView.vue` component.
+We use the route parameter `:id` in the same fashion as described in the previous lesson where when creating the `Vehicles/EditView.vue` component.
 
-Full content of `src/router/index.js`:
+The full content of `src/router/index.js`:
 
 ```js
 import { createRouter, createWebHistory } from "vue-router";
@@ -268,7 +268,7 @@ const router = createRouter({
 export default router;
 ```
 
-4. And last step is to replace button in `src/views/Parkings/ParkingHistory.vue` component to glue our final component to the clien application.
+4. And last step is to replace the button in the `src/views/Parkings/ParkingHistory.vue` component to glue our final component to the client application.
 
 from:
 

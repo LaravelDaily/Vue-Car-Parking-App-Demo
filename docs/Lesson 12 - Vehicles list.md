@@ -1,10 +1,10 @@
 # Lesson 12 - Vehicles list
 
-After adding a new vehicle to user's account, the following list of user's cars should be our goal for this lesson.
+After adding a new vehicle to the user's account, the following list of users' cars should be our goal for this lesson.
 
 ![Vehicles list](assets/vehicles-list.png)
 
-1. First we want to extend `src/stores/vehicle.js` store.
+1. First we want to extend the `src/stores/vehicle.js` store.
 
 ```js
 // ...
@@ -32,9 +32,9 @@ return {
 };
 ```
 
-New variable was created `const vehicles = ref([])`. It will hold vehicles list fetched from API by `getVehicles()` method. Both `vehicles` and `getVehicles()` are returned from store function to make them available in component.
+A new variable was created `const vehicles = ref([])`. It will hold the vehicles list fetched from API by the `getVehicles()` method. Both `vehicles` and `getVehicles()` are returned from the store function to make them available in the component.
 
-Extended store file has the following content.
+The extended store file has the following content.
 
 ```js
 import { reactive, ref } from "vue";
@@ -95,7 +95,7 @@ export const useVehicle = defineStore("vehicle", () => {
 });
 ```
 
-2. Update `src/views/Vehicles/IndexView.vue` component.
+2. Update the `src/views/Vehicles/IndexView.vue` component.
 
 ```vue
 <script setup>
@@ -166,7 +166,7 @@ The mustache tag will be replaced with the value of the `vehicle.plate_number` p
 
 ## List rendering
 
-We can use `v-for` directive to render a list of items based on an array. The `v-for` directive requires a special syntax in the form of `item in items`, where `items` is the source data array and `item` is an **alias** for the array element being iterated on:
+We can use the `v-for` directive to render a list of items based on an array. The `v-for` directive requires a special syntax in the form of `item in items`, where `items` is the source data array and `item` is an **alias** for the array element being iterated on:
 
 ```vue
 <div
@@ -176,9 +176,9 @@ We can use `v-for` directive to render a list of items based on an array. The `v
 >
 ```
 
-When Vue is updating a list of elements rendered with `v-for`, by default it uses an "in-place patch" strategy. If the order of the data items has changed, instead of moving the DOM elements to match the order of the items, Vue will patch each element in-place and make sure it reflects what should be rendered at that particular index.
+When Vue is updating a list of elements rendered with `v-for`, by default it uses an "in-place patch" strategy. If the order of the data items has changed, instead of moving the DOM elements to match the order of the items, Vue will patch each element in place and make sure it reflects what should be rendered at that particular index.
 
-To give Vue a hint so that it can track each node's identity, and thus reuse and reorder existing elements, you need to provide a unique `key` attribute for each item. Since every vehicle returned from API contains unique id we can provide `key` value using `vehicle.id`.
+To give Vue a hint so that it can track each node's identity, and thus reuse and reorder existing elements, you need to provide a unique `key` attribute for each item. Since every vehicle returned from API contains a unique id we can provide a `key` value using `vehicle.id`.
 
 ---
 

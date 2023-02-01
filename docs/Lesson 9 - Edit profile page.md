@@ -1,6 +1,6 @@
 # Lesson 9 - Edit profile page
 
-Let's continue work on client by implementing more user features. In this lesson we will cover how to create user profile form to update name and email.
+Let's continue working on the client by implementing more useful features. In this lesson, we will cover how to create a user profile form to update your name and email.
 
 ![Update profile](assets/edit-profile.png)
 
@@ -72,13 +72,13 @@ export const useProfile = defineStore("profile", () => {
 
 We have some new things this time.
 
-Store has additional `status` variable, it will be used to display success message with request to update profile data was successful.
+The store has an additional `status` variable, it will be used to display a success message that the request to update profile data was successful.
 
 ```js
 const status = ref("");
 ```
 
-Up to this moment the only thing client knows about user whether it is authorized or not. Method `fetchProfile()` allows to fetch user name and email from API.
+Up to this moment, the only thing client knows about the user is whether it is authorized or not. Method `fetchProfile()` allows fetching user name and email from API.
 
 ```js
 async function fetchProfile() {
@@ -91,7 +91,7 @@ async function fetchProfile() {
 
 ## Form to edit profile
 
-Create new `src/views/Profile/EditView.vue` component.
+Create a new `src/views/Profile/EditView.vue` component.
 
 ```vue
 <script setup>
@@ -147,13 +147,13 @@ onBeforeUnmount(store.resetForm);
 </template>
 ```
 
-Right in the beginning we can see imported `onMounted()` hook. This lifecycle hook register a callback to be called after the component has been mounted. This hook is typically used for performing side effects. One of the side effects we want is to fetch profile data from API. `fetchProfile()` function from profile store is passed as mentioned callback.
+Right in the beginning we can see the imported `onMounted()` hook. This lifecycle hook registers a callback to be called after the component has been mounted. This hook is typically used for performing side effects. One of the side effects we want is to fetch profile data from API. `fetchProfile()` function from the profile store is passed as mentioned callback.
 
 ```js
 onMounted(store.fetchProfile);
 ```
 
-At the top of the form we have small snippet to display success message.
+At the top of the form, we have a small snippet to display the success message.
 
 ```vue
 <div class="alert alert-success mb-4" v-show="store.status">
@@ -173,7 +173,7 @@ Since we do not have any alert classes by default, to display that in green colo
 }
 ```
 
-Register newly created component in `src/router/index.js` file:
+Register the newly created component in the `src/router/index.js` file:
 
 ```js
 {
@@ -186,7 +186,7 @@ Register newly created component in `src/router/index.js` file:
 
 ## Navigation
 
-And finally add router link to main layout in `src/App.vue` component right before `Logout` button.
+And finally, add the router link to the main layout in the `src/App.vue` component right before the `Logout` button.
 
 ```vue
 <template v-if="auth.check">
@@ -258,4 +258,4 @@ const auth = useAuth();
 </template>
 ```
 
-Now navigate to `/profile` url and try to update user data with various data.
+Now navigate to the `/profile` URL and try to update user data with various data.
