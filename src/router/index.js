@@ -78,6 +78,12 @@ const router = createRouter({
       beforeEnter: auth,
       component: () => import("@/views/Parkings/OrderParking.vue"),
     },
+    {
+      path: "/parkings/history",
+      name: "parkings.history",
+      beforeEnter: auth,
+      component: () => import("@/views/Parkings/ParkingHistory.vue"),
+    },
   ],
 });
 

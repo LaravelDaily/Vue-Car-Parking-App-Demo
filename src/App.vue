@@ -26,6 +26,9 @@ const auth = useAuth();
             <RouterLink class="router-link" :to="{ name: 'vehicles.index' }">
               Vehicles
             </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'parkings.history' }">
+              History
+            </RouterLink>
           </template>
           <template v-else>
             <RouterLink class="router-link" :to="{ name: 'home' }">
