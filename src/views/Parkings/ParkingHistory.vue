@@ -35,9 +35,12 @@ store.getStoppedParkings();
           }}</span>
           <span class="pt-0.5">&nbsp;&euro;</span>
         </div>
-        <button type="button" class="btn btn-secondary uppercase">
+        <RouterLink
+          :to="{ name: 'parkings.show', params: { id: parking.id } }"
+          class="btn btn-secondary uppercase"
+        >
           view details
-        </button>
+        </RouterLink>
       </div>
     </div>
   </div>
